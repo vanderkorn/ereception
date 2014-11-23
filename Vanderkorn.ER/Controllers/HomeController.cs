@@ -12,6 +12,9 @@ namespace Vanderkorn.ER.Controllers
         {
             return View();
         }
-
+        public ActionResult HomePage()
+        {
+            return View();
+        }
     }
 }

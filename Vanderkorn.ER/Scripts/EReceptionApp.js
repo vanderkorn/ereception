@@ -23,8 +23,10 @@ EReceptionApp.filter('getById', function() {
 });
 
 var configFunction = function ($routeProvider) {
-    $routeProvider.
-        when('/reception', {
+    $routeProvider.when("/home", {
+        templateUrl: "/Home/HomePage"
+    })
+        .when('/reception', {
             templateUrl: '/Reception',
             controller: ReceptionController
         })
@@ -40,6 +42,7 @@ var configFunction = function ($routeProvider) {
             templateUrl: '/Account/Register',
             controller: RegisterController
         });
+    $routeProvider.otherwise({ redirectTo: "/home" });
 }
 configFunction.$inject = ['$routeProvider', '$httpProvider'];
 EReceptionApp.config(configFunction);
