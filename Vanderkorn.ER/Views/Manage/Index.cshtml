@@ -11,7 +11,7 @@
           {
 
               <form class="form-login" role="form" ng-submit="becomesecretary()">
-                  <a href="#" ng-click="becomeminister()">Стать министром</a><br/>
+ <button class="btn btn-md btn-info btn-block" ng-click="becomeminister()">Стать министром</button>
                   @Html.DropDownListFor(n => n.ReceptionId, new SelectList(Model.Receptions, "Id", "Name"), "--Выберите приёмную --", new Dictionary<string, object> { { "data-ng-model", "reception" } })<br />
                   <button class="btn btn-md btn-info btn-block" type="submit">Стать секретарем</button>
               </form>

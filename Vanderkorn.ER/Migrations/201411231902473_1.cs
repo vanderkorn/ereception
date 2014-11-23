@@ -12,18 +12,17 @@ namespace Vanderkorn.ER.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ReceptionId = c.Long(nullable: false),
+                        ReceptionId = c.Int(nullable: false),
                         Description = c.String(),
                         AppealType = c.Int(nullable: false),
                         ModifyDate = c.DateTime(nullable: false),
                         IsExecuted = c.Boolean(nullable: false),
                         DecisionType = c.Int(nullable: false),
                         Comment = c.String(),
-                        Reception_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Receptions", t => t.Reception_Id)
-                .Index(t => t.Reception_Id);
+                .ForeignKey("dbo.Receptions", t => t.ReceptionId, cascadeDelete: true)
+                .Index(t => t.ReceptionId);
             
             CreateTable(
                 "dbo.Receptions",
@@ -43,7 +42,7 @@ namespace Vanderkorn.ER.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        ReceptionId = c.Long(nullable: false),
+                        ReceptionId = c.Int(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -56,14 +55,13 @@ namespace Vanderkorn.ER.Migrations
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
                         Reception_Id = c.Int(),
-                        Reception_Id1 = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Receptions", t => t.ReceptionId)
                 .ForeignKey("dbo.Receptions", t => t.Reception_Id)
-                .ForeignKey("dbo.Receptions", t => t.Reception_Id1)
+                .Index(t => t.ReceptionId)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex")
-                .Index(t => t.Reception_Id)
-                .Index(t => t.Reception_Id1);
+                .Index(t => t.Reception_Id);
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -118,11 +116,11 @@ namespace Vanderkorn.ER.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Appeals", "Reception_Id", "dbo.Receptions");
-            DropForeignKey("dbo.AspNetUsers", "Reception_Id1", "dbo.Receptions");
+            DropForeignKey("dbo.Appeals", "ReceptionId", "dbo.Receptions");
+            DropForeignKey("dbo.AspNetUsers", "Reception_Id", "dbo.Receptions");
             DropForeignKey("dbo.Receptions", "MinisterId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUsers", "Reception_Id", "dbo.Receptions");
+            DropForeignKey("dbo.AspNetUsers", "ReceptionId", "dbo.Receptions");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -130,11 +128,11 @@ namespace Vanderkorn.ER.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", new[] { "Reception_Id1" });
             DropIndex("dbo.AspNetUsers", new[] { "Reception_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.AspNetUsers", new[] { "ReceptionId" });
             DropIndex("dbo.Receptions", new[] { "MinisterId" });
-            DropIndex("dbo.Appeals", new[] { "Reception_Id" });
+            DropIndex("dbo.Appeals", new[] { "ReceptionId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

@@ -61,7 +61,7 @@
 
             var model = new IndexViewModel
             {
-                ReceptionId = receptionId,
+                ReceptionId = receptionId == null ? 0 : receptionId.Value,
                 Receptions = receptions
             };
             return View(model);
@@ -103,7 +103,7 @@
             //var m = UserManager.IsInRole(user.Id, "Secretary");
         }
         [System.Web.Mvc.HttpPost]
-        public async Task<bool> BecomeSecretary([FromBody]long ReceptionId)
+        public async Task<bool> BecomeSecretary([FromBody]int ReceptionId)
         {
             var userId = this.User.Identity.GetUserId();
             var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());

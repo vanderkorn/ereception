@@ -63,7 +63,7 @@
 
            var receptionId = user.ReceptionId;
 
-           if (receptionId <= 0)
+           if (receptionId ==null || receptionId <= 0)
             {
                 var reception = this.applicationDbContext.Receptions.FirstOrDefault(r => r.MinisterId == user.Id);
                 if (reception != null)
@@ -85,7 +85,7 @@
             var userId = this.User.Identity.GetUserId();
             var user = this.UserManager.FindById(userId);
             var receptionId = user.ReceptionId;
-            if (receptionId <=0)
+            if (receptionId == null && receptionId <= 0)
             {
                 return this.BadRequest();
             }
@@ -93,7 +93,7 @@
             value.Comment = string.Empty;
             value.DecisionType = DecisionType.None;
             value.ModifyDate = DateTime.UtcNow;
-            value.ReceptionId = receptionId;
+            value.ReceptionId = receptionId.Value;
 
             var appeal = this.applicationDbContext.Appeals.Add(value);
             this.applicationDbContext.SaveChanges();
@@ -102,7 +102,7 @@
          
             var connections = ReceptionHub._connections.GetConnections(this.User.Identity.Name);
 
-            hubContext.Clients.Group(receptionId.ToString(CultureInfo.InvariantCulture), connections.ToArray()).updateAppeal(appeal);
+            hubContext.Clients.Group(receptionId.Value.ToString(CultureInfo.InvariantCulture), connections.ToArray()).updateAppeal(appeal);
 
             return this.Ok(appeal);
         }
@@ -161,7 +161,7 @@
             var userId = this.User.Identity.GetUserId();
             var user = this.UserManager.FindById(userId);
             var receptionId = user.ReceptionId;
-            if (receptionId <= 0)
+            if (receptionId == null || receptionId <= 0)
             {
                 return this.BadRequest();
             }
@@ -187,7 +187,7 @@
 
                 var connections = ReceptionHub._connections.GetConnections(this.User.Identity.Name);
 
-                hubContext.Clients.Group(receptionId.ToString(CultureInfo.InvariantCulture), connections.ToArray()).updateAppeal(appeal);
+                hubContext.Clients.Group(receptionId.Value.ToString(CultureInfo.InvariantCulture), connections.ToArray()).updateAppeal(appeal);
 
                 return this.Ok();
             }

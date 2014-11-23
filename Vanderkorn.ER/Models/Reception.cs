@@ -34,7 +34,7 @@
         /// <summary>
         /// Министр
         /// </summary>
-        public ApplicationUser Minister { get; set; }
+        public virtual ApplicationUser Minister { get; set; }
 
         /// <summary>
         /// Секретари

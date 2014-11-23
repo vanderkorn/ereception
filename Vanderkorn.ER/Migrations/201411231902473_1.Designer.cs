@@ -13,7 +13,7 @@ namespace Vanderkorn.ER.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201411230807275_1"; }
+            get { return "201411231902473_1"; }
         }
         
         string IMigrationMetadata.Source

@@ -18,12 +18,12 @@ namespace Vanderkorn.ER.Models
         /// <summary>
         /// Идентификатор приёмной
         /// </summary>
-        public long ReceptionId { get; set; }
+        public int ReceptionId { get; set; }
 
         /// <summary>
         /// Приёмная
         /// </summary>
-        public Reception Reception { get; set; }
+        public virtual Reception Reception { get; set; }
 
         /// <summary>
         /// Текст обращения

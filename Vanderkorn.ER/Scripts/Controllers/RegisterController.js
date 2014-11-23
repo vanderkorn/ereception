@@ -10,7 +10,7 @@
         var result = authService.register($scope.registerForm.emailAddress, $scope.registerForm.password, $scope.registerForm.confirmPassword);
         result.then(function (result) {
             if (result.success) {
-                $location.path('/routeOne');
+                $location.path('/login');
             } else {
                 $scope.registerForm.registrationFailure = true;
             }

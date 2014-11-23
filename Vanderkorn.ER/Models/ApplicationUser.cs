@@ -16,8 +16,9 @@
             return userIdentity;
         }
 
-        public long ReceptionId { get; set; }
-        public Reception Reception { get; set; }
+        public int? ReceptionId { get; set; }
+        public virtual Reception Reception { get; set; }
+
 
     }
 }
