@@ -16,15 +16,23 @@
     [System.Web.Mvc.Authorize]
     public class ManageController : Controller
     {
-        private readonly ApplicationDbContext applicationDbContext;
+        private  ApplicationSignInManager signInManager;
 
+
+        private readonly ApplicationDbContext applicationDbContext;
+        public ApplicationSignInManager SignInManager
+        {
+            get { return signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { signInManager = value; }
+        }
         public ManageController()
         {
             this.applicationDbContext = new ApplicationDbContext();
         }
 
-        public ManageController(ApplicationUserManager userManager)
+        public ManageController(ApplicationUserManager userManager,ApplicationSignInManager signInManager)
         {
+            this.signInManager = signInManager;
             this.applicationDbContext = new ApplicationDbContext();
             this.UserManager = userManager;
         }
@@ -82,8 +90,17 @@
                                                              }
                     );
                 await this.applicationDbContext.SaveChangesAsync();
+                await this.SignInToActivateNewRoleAsync(user);
             }
             return true;
+        }
+        public async Task SignInToActivateNewRoleAsync(ApplicationUser user)
+        {
+            //TODO: figure out the correct values for the isPersistent & rememberBrowser !!
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+            //var r = UserManager.IsInRole(user.Id, "Minister");
+            //var m = UserManager.IsInRole(user.Id, "Secretary");
         }
         [System.Web.Mvc.HttpPost]
         public async Task<bool> BecomeSecretary([FromBody]long ReceptionId)
@@ -107,7 +124,7 @@
             user.ReceptionId = ReceptionId;
 
             await this.UserManager.UpdateAsync(user);
-
+            await this.SignInToActivateNewRoleAsync(user);
             return true;
         }
     }

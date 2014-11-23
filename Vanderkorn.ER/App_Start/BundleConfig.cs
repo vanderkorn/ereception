@@ -43,16 +43,7 @@ namespace Vanderkorn.ER
                                   "~/Content/fontawesome/font-awesome.css",
                                  "~/Content/bootstrap.min.css",
                                   "~/Content/loading-bar.css")
-                                //  .Include("~/Content/fontawesome/font-awesome.css", new CssRewriteUrlTransform())
                                   );
-
-         //   bundles.Add(new StyleBundle("~/Content/fontawesome-bundle").Include("~/Content/fontawesome/font-awesome.css"));
-
-          //  bundles.Add(new StyleBundle("~/Content/font-awesome") 
-      //  { Builder = new ReplaceContentsBundleBuilder("url('../fonts/", "url('/Content/fonts/") }
-            //    .Include("~/Content/font-awesome/font-awesome.min.css"));
-            //bundles.Add(new StyleBundle("~/Content/font-awesome") { Builder = new ReplaceContentsBundleBuilder("url('../fonts/", "url('/Content/fonts/") }
-            //   .Include("~/Content/font-awesome.css", new CssRewriteUrlTransform()));
             bundles.Add(new ScriptBundle("~/bundles/EReceptionApp")
                                 .Include("~/Scripts/jquery-2.1.1.min.js")
                                 .Include("~/Scripts/jquery.signalR-2.1.2.min.js")
@@ -62,7 +53,7 @@ namespace Vanderkorn.ER
                                .Include("~/Scripts/loading-bar.min.js")
                                .Include("~/Scripts/angular-signalr-hub.min.js")
                                .IncludeDirectory("~/Scripts/Controllers", "*.js")
-                               .IncludeDirectory("~/Scripts/Factories", "*.js")
+                               //.IncludeDirectory("~/Scripts/Factories", "*.js")
                                .IncludeDirectory("~/Scripts/Services", "*.js")
                                .Include("~/Scripts/EReceptionApp.js")
                               );

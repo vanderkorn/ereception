@@ -9,3 +9,5 @@ obj
 /*.Cache
 /StyleCop.Cache
 *.Cache
+/Vanderkorn.ER/Web.Production.config
+/Vanderkorn.ER/Properties/PublishProfiles
