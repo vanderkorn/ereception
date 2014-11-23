@@ -43,7 +43,7 @@
     $scope.master = {};
     $scope.appealtypes = [
          { "name": 'Звонок', 'id': 0 },
-        { "name": 'Пользователь', 'id': 1 }
+        { "name": 'Посетитель', 'id': 1 }
     ];
     $scope.decisionTypes = [
          { "name": 'Не выставлен', 'id': 0 },
