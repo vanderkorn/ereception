@@ -1,0 +1,16 @@
+﻿<form class="form-login" role="form" ng-submit="login()">
+
+    <h2 class="form-login-heading">Авторизация</h2>
+    <input type="text" class="form-control" placeholder="Электронный адрес" id="emailAddress" data-ng-model="loginForm.emailAddress" required autofocus>
+    <input type="password" class="form-control" placeholder="Пароль" id="password" data-ng-model="loginForm.password" required>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="rememberMe" data-ng-model="loginForm.rememberMe"><strong>Сохранить пароль</strong>
+        </label>
+    </div>
+    <button class="btn btn-md btn-info btn-block" type="submit">Войти</button>
+    <div ng-if="loginForm.loginFailure" class="alert alert-danger">
+        Ошибка авторизации!
+    </div>
+
+</form>

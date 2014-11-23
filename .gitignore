@@ -1,0 +1,11 @@
+/.nuget
+/packages
+/TestResults
+/*.suo
+bin
+obj
+*.user
+/*.user
+/*.Cache
+/StyleCop.Cache
+*.Cache

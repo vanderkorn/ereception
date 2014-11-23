@@ -1,0 +1,37 @@
+﻿@model Vanderkorn.ER.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+<div>
+    <h4>Управление аккаунтом</h4>
+   
+
+   
+          @if (!User.IsInRole("Minister") && !User.IsInRole("Secretary"))
+          {
+
+              <form class="form-login" role="form" ng-submit="becomesecretary()">
+                  <a href="#" ng-click="becomeminister()">Стать министром</a><br/>
+                  @Html.DropDownListFor(n => n.ReceptionId, new SelectList(Model.Receptions, "Id", "Name"), "--Выберите приёмную --", new Dictionary<string, object> { { "data-ng-model", "reception" } })<br />
+                  <button class="btn btn-md btn-info btn-block" type="submit">Стать секретарем</button>
+              </form>
+
+              <div ng-if="failure" class="alert alert-danger">
+                  Ошибка!
+              </div>
+          }
+          else
+          {
+              
+if (User.IsInRole("Minister"))
+{
+    <p>Вы, Министр </p>
+}
+if (User.IsInRole("Secretary"))
+{
+    <p>Вы, Секретарь </p>
+}
+
+          }
+  
+</div>

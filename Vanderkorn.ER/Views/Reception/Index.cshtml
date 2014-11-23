@@ -1,0 +1,97 @@
+﻿@if (User.IsInRole("Minister"))
+{
+    <p>Министр </p>
+}
+@if (User.IsInRole("Secretary"))
+{
+    <p>Секретарь </p>
+}
+
+            <div class="row" ng-init="getAppeals()">
+                <div class=".col-xs-4 col-md-4">
+                    <h4>Новые обращения</h4>
+                    @if (User.IsInRole("Secretary"))
+                    {
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Описание обращения</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" ng-model="newappeal.description" id="inputEmail3" placeholder="Описание обращения" cols="40" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Вид обращения</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" ng-model="newappeal.appealtype" id="inputPassword3" ng-options="item.id as item.name for  item in appealtypes"><option value="" selected>--Пожалуйста, выберите вид обращения--</option></select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button ng-click="reset()" class="btn btn-info">Сбросить</button>&nbsp;&nbsp;<button ng-click="create(newappeal)" class="btn btn-info">Добавить</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                    <ul ng-repeat="appeal in appeals | filter:{isExecuted:false,decisionType:0} | orderBy: 'modifyDate' " class="list-unstyled">
+                        <li class="bs-callout bs-callout-danger">
+                            <dl class="dl-horizontal">
+                                <dt>Описание обращения</dt>
+                                <dd>{{appeal.description}}</dd>
+                                <dt>Вид обращения</dt>
+                                <dd><select disabled ng-model="appeal.appealType" class="form-control" ng-options="item.id as item.name for  item in appealtypes"></select></dd>
+                                <dt>Комментарий</dt>
+                                <dd><textarea @if (User.IsInRole("Secretary")) { @("disabled")          ; } ng-model="appeal.comment" class="form-control" cols="40" rows="4"></textarea></dd>
+                                <dt>Вид решения</dt>
+                                <dd><select @if (User.IsInRole("Secretary")) { @("disabled")          ; } ng-model="appeal.decisionType" class="form-control" ng-options="item.id as item.name for  item in decisionTypes" ng-change="decide(appeal.decisionType, appeal.comment, appeal.id)"></select></dd>
+                                <dt>Дата обращения</dt>
+                                <dd>{{appeal.modifyDate}}</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class=".col-xs-4  col-md-4">
+                    <h4>Обращения в обработке</h4>
+                    <ul ng-repeat="appeal in appeals | filter:{isExecuted:false, decisionType:'!0'} | orderBy: 'modifyDate' " class="list-unstyled">
+                        <li class="bs-callout bs-callout-warning">
+                            <dl class="dl-horizontal">
+                                <dt>Описание обращения</dt>
+                                <dd>{{appeal.description}}</dd>
+                                <dt>Вид обращения</dt>
+                                <dd><select disabled ng-model="appeal.appealType" class="form-control" ng-options="item.id as item.name for  item in appealtypes"></select></dd>
+                                <dt>Комментарий</dt>
+                                <dd>{{appeal.comment}}</dd>
+                                <dt>Вид решения</dt>
+                                <dd><select disabled ng-model="appeal.decisionType" class="form-control" ng-options="item.id as item.name for  item in decisionTypes"></select></dd>
+                                <dt>Статус выполнения</dt>
+                                <dd><input @if (User.IsInRole("Minister")) { @("disabled")          ; } type="checkbox" class="form-control" ng-model="appeal.isExecuted" ng-true-value="true" ng-false-value="false" ng-change="execute(appeal.isExecuted, appeal.id)"></dd>
+                                <dt>Дата обращения</dt>
+                                <dd>{{appeal.modifyDate}}</dd>
+                            </dl>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class=".col-xs-4 col-md-4">
+                    <h4>Выполненные обращения</h4>
+                    <ul ng-repeat="appeal in appeals | filter:{isExecuted:true} | orderBy: 'modifyDate' " class="list-unstyled">
+                        <li class="bs-callout bs-callout-info">
+                            <dl class="dl-horizontal">
+                                <dt>Описание обращения</dt>
+                                <dd>{{appeal.description}}</dd>
+                                <dt>Вид обращения</dt>
+                                <dd><select disabled ng-model="appeal.appealType" class="form-control" ng-options="item.id as item.name for  item in appealtypes"></select></dd>
+                                <dt>Комментарий</dt>
+                                <dd>{{appeal.comment}}</dd>
+                                <dt>Вид решения</dt>
+                                <dd><select disabled ng-model="appeal.decisionType" class="form-control" ng-options="item.id as item.name for  item in decisionTypes"></select></dd>
+                                <dt>Статус выполнения</dt>
+                                <dd><input disabled type="checkbox" ng-model="appeal.isExecuted" class="form-control" ng-true-value="true" ng-false-value="false"></dd>
+                                <dt>Дата обращения</dt>
+                                <dd>{{appeal.modifyDate}}</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
